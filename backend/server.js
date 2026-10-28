@@ -27,9 +27,13 @@ app.get("/", (req, res) => {
 
 });
 
-app.get("/db-health", (req, res) => {
+app.get("/db-health", async (req, res) => {
     const states = ["disconnected", "connected", "connecting", "disconnecting"];
-    const readyState = mongoose.connection.readyState;
+    let readyState = mongoose.connection.readyState;
+    if (readyState === 0 && db.connectDB) {
+        await db.connectDB();
+        readyState = mongoose.connection.readyState;
+    }
     res.json({
         status: states[readyState] || "unknown",
         connected: readyState === 1,

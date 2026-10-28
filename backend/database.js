@@ -20,18 +20,26 @@ console.log("Connecting to MongoDB URI:", MONGO_URI.replace(/:[^:@]+@/, ":****@"
 
 let lastError = null;
 
-mongoose
-  .connect(MONGO_URI, {
-    serverSelectionTimeoutMS: 5000,
-  })
-  .then(() => {
+const connectDB = async () => {
+  if (mongoose.connection.readyState === 1 || mongoose.connection.readyState === 2) {
+    return;
+  }
+  try {
+    await mongoose.connect(MONGO_URI, {
+      serverSelectionTimeoutMS: 5000,
+    });
+    lastError = null;
     console.log("MongoDB Connected Successfully!");
-  })
-  .catch((error) => {
+  } catch (error) {
     lastError = error.message;
     console.error("MongoDB Connection Error:", error.message);
-  });
+    setTimeout(connectDB, 5000);
+  }
+};
+
+connectDB();
 
 module.exports = {
+  connectDB,
   getLastError: () => lastError
 };
