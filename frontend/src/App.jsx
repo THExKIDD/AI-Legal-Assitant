@@ -772,7 +772,9 @@ function App() {
     }
 
     try {
-      const response = await fetch(`${API_URL}/saved?userId=${user.userId}`);
+      const response = await fetch(
+        `${API_URL}/saved?userId=${encodeURIComponent(user.userId)}`
+      );
 
       if (!response.ok) {
         throw new Error("Cannot load saved answers.");
@@ -812,9 +814,10 @@ function App() {
     }
 
     try {
-      const response = await fetch(`${API_URL}/saved/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${API_URL}/saved/${encodeURIComponent(id)}?userId=${encodeURIComponent(user.userId)}`,
+        { method: "DELETE" }
+      );
 
       const data = await response.json();
 

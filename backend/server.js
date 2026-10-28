@@ -406,13 +406,7 @@ app.get("/saved", async (req, res) => {
         }
 
         const savedAnswers =
-            await Saved.find({
-                $or: [
-                    { userId: userId },
-                    { userId: null },
-                    { userId: { $exists: false } }
-                ]
-            }).sort({
+            await Saved.find({ userId }).sort({
 
                 date: -1
 
@@ -438,20 +432,31 @@ app.delete("/saved/:id", async (req, res) => {
 
     try {
 
-        await Saved.findByIdAndDelete(
-            req.params.id
-        );
+        const { userId } = req.query;
+        const { id } = req.params;
 
-        res.json({
+        if (!userId) {
+            return res.status(401).json({
+                requireLogin: true,
+                message: "Please log in to remove saved answers."
+            });
+        }
 
-            message:
-                "Saved answer removed"
+        if (!mongoose.isValidObjectId(id)) {
+            return res.status(400).json({ message: "Invalid saved answer id" });
+        }
 
-        });
+        const deletedAnswer = await Saved.findOneAndDelete({ _id: id, userId });
+        if (!deletedAnswer) {
+            return res.status(404).json({ message: "Saved answer not found" });
+        }
+
+        return res.json({ message: "Saved answer removed" });
 
     } catch (error) {
 
-        res.status(500).json({
+        console.log("DELETE SAVED ANSWER ERROR:", error.message);
+        return res.status(500).json({
 
             message:
                 "Cannot remove saved answer"
