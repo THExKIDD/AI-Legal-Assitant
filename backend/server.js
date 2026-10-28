@@ -27,6 +27,18 @@ app.get("/", (req, res) => {
 
 });
 
+app.get("/db-health", (req, res) => {
+    const states = ["disconnected", "connected", "connecting", "disconnecting"];
+    const readyState = mongoose.connection.readyState;
+    res.json({
+        status: states[readyState] || "unknown",
+        connected: readyState === 1,
+        readyState: readyState,
+        uriConfigured: Boolean(process.env.MONGODB_URI),
+        platform: process.platform
+    });
+});
+
 
 const GUEST_FREE_LIMIT = 3;
 const GUEST_COOLDOWN_MS = 4 * 60 * 60 * 1000; // 4-hour cooldown for guests
@@ -530,7 +542,8 @@ app.post("/signup", async (req, res) => {
         }
 
         return res.status(500).json({
-            message: "Signup failed. Please try again."
+            message: "Signup failed. Please try again.",
+            error: error.message
         });
     }
 });
@@ -580,7 +593,8 @@ app.post("/login", async (req, res) => {
         console.log("LOGIN ERROR:", error.message);
 
         return res.status(500).json({
-            message: "Login failed. Please try again."
+            message: "Login failed. Please try again.",
+            error: error.message
         });
     }
 });
