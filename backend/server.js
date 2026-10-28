@@ -7,7 +7,7 @@ const axios = require("axios");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 
-require("./database");
+const db = require("./database");
 
 const Chat = require("./Chat");
 const User = require("./user");
@@ -35,7 +35,8 @@ app.get("/db-health", (req, res) => {
         connected: readyState === 1,
         readyState: readyState,
         uriConfigured: Boolean(process.env.MONGODB_URI),
-        platform: process.platform
+        platform: process.platform,
+        error: db.getLastError ? db.getLastError() : null
     });
 });
 

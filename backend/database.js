@@ -5,7 +5,6 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const dns = require("dns");
 
-// Only apply custom DNS servers on Windows environments where SRV resolution may fail
 if (process.platform === "win32") {
   try {
     dns.setServers(["8.8.8.8", "8.8.4.4"]);
@@ -19,11 +18,20 @@ const MONGO_URI =
 
 console.log("Connecting to MongoDB URI:", MONGO_URI.replace(/:[^:@]+@/, ":****@"));
 
+let lastError = null;
+
 mongoose
-  .connect(MONGO_URI)
+  .connect(MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+  })
   .then(() => {
     console.log("MongoDB Connected Successfully!");
   })
   .catch((error) => {
+    lastError = error.message;
     console.error("MongoDB Connection Error:", error.message);
   });
+
+module.exports = {
+  getLastError: () => lastError
+};
