@@ -5,7 +5,7 @@ import legalLogo from "./assets/legal-logo.png";
 import legalHero from "./assets/legal-hero.png";
 import LegalMessageContent from "./LegalMessageContent";
 
-const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const GUEST_FREE_LIMIT = 3;
 const GUEST_COOLDOWN_SECONDS = 4 * 60 * 60; // 4 hours

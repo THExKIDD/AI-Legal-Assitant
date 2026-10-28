@@ -1,3 +1,6 @@
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
@@ -11,6 +14,8 @@ const User = require("./user");
 const Saved = require("./Saved");
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+const AI_SERVICE_URL = process.env.AI_SERVICE_URL || "http://127.0.0.1:8000";
 
 app.use(cors());
 app.use(express.json());
@@ -168,7 +173,7 @@ app.post("/chat", async (req, res) => {
     try {
 
         const response = await axios.post(
-            "http://127.0.0.1:8000/ask",
+            `${AI_SERVICE_URL}/ask`,
             {
                 question: question,
                 is_detailed: is_detailed
@@ -698,6 +703,6 @@ app.put("/feedback/:id", async (req, res) => {
 
 });
 
-app.listen(5000, () => {
-    console.log("Server running on http://localhost:5000");
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

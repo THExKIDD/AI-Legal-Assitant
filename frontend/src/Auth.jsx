@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 import React, { useState } from "react";
 import legalLogo from "./assets/legal-logo.png";
 
@@ -34,7 +35,7 @@ export function Auth({ onLoginSuccess }) {
 
     try {
       // First try to login as Normal User
-      const loginRes = await fetch("http://localhost:5000/login", {
+      const loginRes = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -57,7 +58,7 @@ export function Auth({ onLoginSuccess }) {
       }
 
       // If user does not exist yet, register Normal User in MongoDB
-      const signupRes = await fetch("http://localhost:5000/signup", {
+      const signupRes = await fetch(`${API_URL}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -137,7 +138,7 @@ export function Auth({ onLoginSuccess }) {
       setLoading(true);
 
       try {
-        const response = await fetch("http://localhost:5000/signup", {
+        const response = await fetch(`${API_URL}/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -163,7 +164,7 @@ export function Auth({ onLoginSuccess }) {
 
         // Automatically log in
         try {
-          const autoLoginRes = await fetch("http://localhost:5000/login", {
+          const autoLoginRes = await fetch(`${API_URL}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -208,7 +209,7 @@ export function Auth({ onLoginSuccess }) {
       setLoading(true);
 
       try {
-        const response = await fetch("http://localhost:5000/login", {
+        const response = await fetch(`${API_URL}/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
