@@ -1,0 +1,17 @@
+CYBER CRIME
+
+Cyber crime refers to unlawful activities involving computers, mobile devices, networks, digital accounts, or the internet.
+
+Examples may include online fraud, unauthorized access to accounts, identity theft, phishing, cyber stalking, and misuse of personal information.
+
+A person who experiences a cyber incident should preserve relevant evidence.
+
+Evidence may include screenshots, emails, messages, transaction details, phone numbers, website addresses, account information, and other relevant records.
+
+The victim should avoid deleting important messages or digital evidence that may help establish what happened.
+
+Depending on the incident, the matter may be reported through the appropriate cybercrime reporting mechanism or law-enforcement authority.
+
+For example, if a person receives a fake banking link and money is fraudulently taken from their account, they should preserve transaction details and other evidence and promptly report the incident through appropriate channels.
+
+The exact legal procedure depends on the nature of the cyber incident and applicable law.

@@ -1,0 +1,19 @@
+ONLINE FRAUD
+
+Online fraud occurs when digital methods are used dishonestly to obtain money, information, account access, or another benefit.
+
+Examples may include phishing links, fake shopping websites, payment scams, impersonation, fraudulent investment schemes, fake customer-care calls, and unauthorized online transactions.
+
+A victim should act quickly after discovering suspected online fraud.
+
+The person should preserve screenshots, transaction IDs, bank statements, phone numbers, email addresses, website links, messages, and other available digital evidence.
+
+If financial information or an account may have been compromised, the victim should promptly contact the relevant bank or payment service provider and take appropriate steps to secure the account.
+
+The incident may also be reported through the appropriate cybercrime reporting or law-enforcement mechanism.
+
+Passwords and other account credentials should be changed when necessary, and compromised accounts should be secured.
+
+For example, if a person enters banking information on a fake website and an unauthorized transaction occurs, the person should preserve the evidence and promptly report the transaction and incident through appropriate channels.
+
+The appropriate reporting and legal procedure depends on the nature of the fraud and applicable law.
