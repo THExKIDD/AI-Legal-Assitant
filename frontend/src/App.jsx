@@ -503,18 +503,27 @@ function App() {
       // Condition: Non-logged-in users get normal answer (detailed is disabled for guests)
       const effectiveDetailed = isUserLoggedIn ? isDetailed : false;
 
-      const response = await fetch(`${API_URL}/chat`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          question: finalQuestion,
-          is_detailed: effectiveDetailed,
-          save_chat: isUserLoggedIn,
-          userId: isUserLoggedIn ? user.userId : null,
-        }),
-      });
+      // 3 min timeout so cold-starts on Render free tier (up to 90 s) don't break the request
+      const controller = new AbortController();
+      const fetchTimeout = setTimeout(() => controller.abort(), 180000);
+      let response;
+      try {
+        response = await fetch(`${API_URL}/chat`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            question: finalQuestion,
+            is_detailed: effectiveDetailed,
+            save_chat: isUserLoggedIn,
+            userId: isUserLoggedIn ? user.userId : null,
+          }),
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(fetchTimeout);
+      }
 
       const data = await response.json();
 

@@ -194,7 +194,8 @@ app.post("/chat", async (req, res) => {
             {
                 question: question,
                 is_detailed: is_detailed
-            }
+            },
+            { timeout: 180000 } // 3 min — allows for cold-start wake-up on Render free tier
         );
 
         const answer =
